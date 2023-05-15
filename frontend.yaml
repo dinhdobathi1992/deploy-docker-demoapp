@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docker-demoapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docker-demoapp
+  template:
+    metadata:
+      labels:
+        app: docker-demoapp
+    spec:
+      containers:
+      - name: docker-demoapp
+        image: xxxxxxx
+        ports:
+        - containerPort: 5000
+        env:
+          - name: DOCKERDEMO_NOTES_DIR
+            value: "/data/notes"
+          - name: DATABASE_HOST
+            value: "database"
+          - name: DATABASE_PORT
+            value: "3306"
+          - name: DATABASE_USER
+            value: "example-user"
+          - name: DATABASE_USER_PASSWORD
+            value: "OGI0YzE2NDU5NTE3MzhmZTI1ZWYxMTY1"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: docker-demoapp
+spec:
+  selector:
+    app: docker-demoapp
+  ports:
+  - port: 5000
+    targetPort: 5000

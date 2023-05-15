@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      containers:
+      - name: database
+        image: mariadb
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_USER
+          value: "example-user"
+        - name: MYSQL_PASSWORD
+          value: "OGI0YzE2NDU5NTE3MzhmZTI1ZWYxMTY1"
+        - name: MYSQL_ROOT_PASSWORD
+          value: "MjcyYjYzOWFkODJhMGQ3ZWRkNWIyY2Yy"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: database
+spec:
+  selector:
+    app: database
+  ports:
+  - port: 3306
+    targetPort: 3306
+
+
